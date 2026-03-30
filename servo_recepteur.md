@@ -6,7 +6,7 @@
 
 🎯 Objectif du programme
 
-Transformer le micro:bit en récepteur radio qui :
+⚙️ Transformer le micro:bit en récepteur radio qui :
 
 ➡️ reçoit "Ouvrir" ou "Fermer"
 
