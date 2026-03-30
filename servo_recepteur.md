@@ -237,6 +237,50 @@ radio.onReceivedString(function (receivedString) {
 
 ```
 
+## Étape 16
+
+Modifie le bloc ``||logic:"Ouvrir"||``.
+
+Regarde l'indice.
+
+```blocks
+
+radio.onReceivedString(function (receivedString) {
+    if (receivedString == "Ouvrir") {
+pins.servoWritePin(AnalogPin.P16, 90)
+pins.digitalWritePin(DigitalPin.P12, 1)
+pins.digitalWritePin(DigitalPin.P14, 0)
+    }
+    if (receivedString == "Fermer") {
+    }
+})
+
+```
+
+## Étape 17
+
+Modifie le bloc ``||logic:"Fermer"||``.
+
+Regarde l'indice.
+
+```blocks
+
+
+radio.onReceivedString(function (receivedString) {
+    if (receivedString == "Ouvrir") {
+        pins.servoWritePin(AnalogPin.P16, 90)
+        pins.digitalWritePin(DigitalPin.P12, 1)
+        pins.digitalWritePin(DigitalPin.P14, 0)
+    }
+    if (receivedString == "Fermer") {
+        pins.servoWritePin(AnalogPin.P16, 0)
+        pins.digitalWritePin(DigitalPin.P12, 0)
+        pins.digitalWritePin(DigitalPin.P14, 1)
+    }
+})
+
+```
+
 ## @showdialog 
 
 🧪 Test final
