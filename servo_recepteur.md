@@ -1,4 +1,4 @@
-# Circuits électriques et servomoteur
+# Émetteur et récepteur
 
 # Tutoriel - Récepteur
 
@@ -6,13 +6,13 @@
 
 🎯 Objectif du programme
 
-⚙️ Transformer le micro:bit en récepteur radio qui :
+📡 Transformer le micro:bit en récepteur radio qui :
 
 ➡️ reçoit "Ouvrir" ou "Fermer"
 
 ➡️ contrôle un servomoteur sur la broche P16
 
-➡️ affiche l'état avec DEL verte (ouvert) ou DEL rouge (fermé).
+➡️ affiche l'état avec DEL verte sur la broche P12 ou DEL rouge sur la broche P14.
 
 ## Étape 1
 
@@ -102,6 +102,15 @@ pins.digitalWritePin(DigitalPin.P12, 0)
 pins.digitalWritePin(DigitalPin.P14, 0)
 
 ```
+## @showdialog
+
+Au démarrage :
+
+➡️ on définit le groupe radio (valeur entre 1 et 255)
+
+➡️ on place le servo en position fermée (0)
+
+➡️ on éteint les deux DEL (0)
 
 ## Étape 8
 
@@ -137,7 +146,7 @@ Modifie le bloc ``||logic:"" = ""||``.
 
 Remplace ``||logic:""||`` de gauche par le bloc ``||pins:receivedString||``. 
 
-Pour y arriver, fais glisser le bloc ``||pins:receivedString||`` du bloc ``||radio:quand une donnée est reçue par radio receivedString||`` dans le bloc ``||logic:""||`` de gauche.
+Fais glisser le bloc ``||pins:receivedString||`` du bloc ``||radio:quand une donnée est reçue||`` dans le bloc ``||logic:""||``.
 
 ```blocks
 
@@ -164,8 +173,81 @@ radio.onReceivedString(function (receivedString) {
 })
 
 ```
-
 ## Étape 12
+
+Ajoute le bloc ``|| pins: régler position servo ||`` dans le bloc ``||logic:si alors||``.
+
+Ajoute deux blocs ``|| pins: écrire sur la broche ||`` sous le bloc ``|| pins: régler position servo ||``.
+
+```blocks
+
+radio.onReceivedString(function (receivedString) {
+    if (receivedString == "Ouvrir") {
+        pins.servoWritePin(AnalogPin.P0, 180)
+        pins.digitalWritePin(DigitalPin.P0, 0)
+        pins.digitalWritePin(DigitalPin.P0, 0)
+})
+
+```
+
+## Étape 13
+
+Modifie le bloc ``|| pins: régler position servo ||``.
+
+Remplace ``|| pins: P0 ||`` par ``|| pins: P16 ||``.
+
+Remplace ``|| pins: 180 ||`` par ``|| pins: 90 ||``.
+
+```blocks
+
+radio.onReceivedString(function (receivedString) {
+    if (receivedString == "Ouvrir") {
+        pins.servoWritePin(AnalogPin.P16, 90)
+        pins.digitalWritePin(DigitalPin.P0, 0)
+        pins.digitalWritePin(DigitalPin.P0, 0)
+})
+
+```
+
+## Étape 14
+
+Modifie le bloc ``|| pins: écrire sur la broche ||``.
+
+Remplace ``|| pins: P0 ||`` pour ``|| pins: P12 ||``.
+
+Remplace ``|| pins: 0 ||`` pour ``|| pins: 1 ||``.
+
+```blocks
+
+radio.onReceivedString(function (receivedString) {
+    if (receivedString == "Ouvrir") {
+        pins.servoWritePin(AnalogPin.P16, 90)
+        pins.digitalWritePin(DigitalPin.P12, 1)
+        pins.digitalWritePin(DigitalPin.P0, 0)
+})
+
+```
+
+## Étape 15
+
+Modifie le bloc ``|| pins: écrire sur la broche ||``.
+
+Remplace ``|| pins: P0 ||`` pour ``|| pins: P14 ||``.
+
+La valeur ``|| pins: 0 ||`` demeure la même.
+
+```blocks
+
+radio.onReceivedString(function (receivedString) {
+    if (receivedString == "Ouvrir") {
+        pins.servoWritePin(AnalogPin.P16, 90)
+        pins.digitalWritePin(DigitalPin.P12, 1)
+        pins.digitalWritePin(DigitalPin.P14, 0)
+})
+
+```
+
+## Étape 16
 
 Ajoute le bloc ``||logic:si vrai alors||`` sous le bloc ``||logic:si vrai alors||``.
 
@@ -173,16 +255,19 @@ Ajoute le bloc ``||logic:si vrai alors||`` sous le bloc ``||logic:si vrai alors|
 
 radio.onReceivedString(function (receivedString) {
     if (receivedString == "Ouvrir") {
-        
+        pins.servoWritePin(AnalogPin.P16, 90)
+        pins.digitalWritePin(DigitalPin.P12, 1)
+        pins.digitalWritePin(DigitalPin.P14, 0)
     }
     if (true) {
-        
+    	
     }
 })
 
+
 ```
 
-## Étape 13
+## Étape 17
 
 Remplace la valeur ``||logic:vrai||`` du bloc ``||logic:si vrai alors||`` par le bloc ``||logic:"" = ""||``.
 
@@ -190,81 +275,45 @@ Remplace la valeur ``||logic:vrai||`` du bloc ``||logic:si vrai alors||`` par le
 
 radio.onReceivedString(function (receivedString) {
     if (receivedString == "Ouvrir") {
-        
+        pins.servoWritePin(AnalogPin.P16, 90)
+        pins.digitalWritePin(DigitalPin.P12, 1)
+        pins.digitalWritePin(DigitalPin.P14, 0)
     }
     if ("" == "") {
-        
+    	
     }
 })
 
 ```
 
-## Étape 14
+## Étape 18
 
 Modifie le bloc ``||logic:"" = ""||``.
 
-Remplace le bloc ``||logic:""||`` de gauche par le bloc ``||pins:receivedString||``. 
+Remplace le bloc ``||logic:" "||`` par le bloc ``||pins:receivedString||``. 
 
-Pour y arriver, fais glisser le bloc ``||pins:receivedString||`` du bloc ``||radio:quand une donnée est reçue par radio receivedString||`` dans le bloc ``||logic:""||`` de gauche.
+Fais glisser le bloc ``||pins:receivedString||`` du bloc ``||radio:quand une donnée est reçue||`` dans le bloc ``||logic:""||``.
 
 ```blocks
 
 radio.onReceivedString(function (receivedString) {
     if (receivedString == "Ouvrir") {
-        
+        pins.servoWritePin(AnalogPin.P16, 90)
+        pins.digitalWritePin(DigitalPin.P12, 1)
+        pins.digitalWritePin(DigitalPin.P14, 0)
     }
     if (receivedString == "") {
-        
+    	
     }
 })
 
 ```
 
-## Étape 15
+## Étape 19
 
-Remplace le bloc ``||logic:""||`` de droite par le mot **Fermer**. 
-
-```blocks
-
-radio.onReceivedString(function (receivedString) {
-    if (receivedString == "Ouvrir") {
-        
-    }
-    if (receivedString == "Fermer") {
-        
-    }
-})
-
-```
-
-## Étape 16
-
-Modifie le bloc ``||logic:"Ouvrir"||``.
-
-Regarde l'indice.
+Remplace le bloc ``||logic:""||`` par le mot **Fermer**. 
 
 ```blocks
-
-radio.onReceivedString(function (receivedString) {
-    if (receivedString == "Ouvrir") {
-pins.servoWritePin(AnalogPin.P16, 90)
-pins.digitalWritePin(DigitalPin.P12, 1)
-pins.digitalWritePin(DigitalPin.P14, 0)
-    }
-    if (receivedString == "Fermer") {
-    }
-})
-
-```
-
-## Étape 17
-
-Modifie le bloc ``||logic:"Fermer"||``.
-
-Regarde l'indice.
-
-```blocks
-
 
 radio.onReceivedString(function (receivedString) {
     if (receivedString == "Ouvrir") {
@@ -273,9 +322,108 @@ radio.onReceivedString(function (receivedString) {
         pins.digitalWritePin(DigitalPin.P14, 0)
     }
     if (receivedString == "Fermer") {
+    	
+    }
+})
+
+```
+
+## Étape 20
+
+Ajoute le bloc ``|| pins: régler position servo ||`` dans le bloc ``||logic:si alors||``.
+
+Ajoute deux blocs ``|| pins: écrire sur la broche ||`` sous le bloc ``|| pins: régler position servo ||``.
+
+```blocks
+
+radio.onReceivedString(function (receivedString) {
+    if (receivedString == "Ouvrir") {
+        pins.servoWritePin(AnalogPin.P16, 90)
+        pins.digitalWritePin(DigitalPin.P0, 0)
+        pins.digitalWritePin(DigitalPin.P0, 0)
+    }
+    if (receivedString == "Fermer") {
+        pins.servoWritePin(AnalogPin.P0, 180)
+        pins.digitalWritePin(DigitalPin.P0, 0)
+        pins.digitalWritePin(DigitalPin.P0, 0)
+    }
+})
+
+
+```
+
+## Étape 21
+
+Modifie le bloc ``|| pins: régler position servo ||``.
+
+Remplace ``|| pins: P0 ||`` par ``|| pins: P16 ||``.
+
+Remplace ``|| pins: 180 ||`` par ``|| pins: 0 ||``.
+
+```blocks
+
+radio.onReceivedString(function (receivedString) {
+    if (receivedString == "Ouvrir") {
+        pins.servoWritePin(AnalogPin.P16, 90)
+        pins.digitalWritePin(DigitalPin.P0, 0)
+        pins.digitalWritePin(DigitalPin.P0, 0)
+    }
+    if (receivedString == "Fermer") {
+        pins.servoWritePin(AnalogPin.P16, 0)
+        pins.digitalWritePin(DigitalPin.P0, 0)
+        pins.digitalWritePin(DigitalPin.P0, 0)
+    }
+})
+
+
+```
+
+## Étape 22
+
+Modifie le bloc ``|| pins: écrire sur la broche ||``.
+
+Remplace ``|| pins: P0 ||`` pour ``|| pins: P12 ||``.
+
+La valeur ``|| pins: 0 ||`` demeure la même.
+
+```blocks
+
+radio.onReceivedString(function (receivedString) {
+    if (receivedString == "Ouvrir") {
+        pins.servoWritePin(AnalogPin.P16, 90)
+        pins.digitalWritePin(DigitalPin.P0, 0)
+        pins.digitalWritePin(DigitalPin.P0, 0)
+    }
+    if (receivedString == "Fermer") {
         pins.servoWritePin(AnalogPin.P16, 0)
         pins.digitalWritePin(DigitalPin.P12, 0)
-        pins.digitalWritePin(DigitalPin.P14, 1)
+        pins.digitalWritePin(DigitalPin.P0, 0)
+    }
+})
+
+
+```
+
+## Étape 23
+
+Modifie le bloc ``|| pins: écrire sur la broche ||``.
+
+Remplace ``|| pins: P0 ||`` pour ``|| pins: P14 ||``.
+
+Remplace ``|| pins: 0 ||`` pour ``|| pins: 1 ||``.
+
+```blocks
+
+radio.onReceivedString(function (receivedString) {
+    if (receivedString == "Ouvrir") {
+        pins.servoWritePin(AnalogPin.P16, 90)
+        pins.digitalWritePin(DigitalPin.P0, 0)
+        pins.digitalWritePin(DigitalPin.P0, 0)
+    }
+    if (receivedString == "Fermer") {
+        pins.servoWritePin(AnalogPin.P16, 0)
+        pins.digitalWritePin(DigitalPin.P12, 0)
+        pins.digitalWritePin(DigitalPin.P0, 1)
     }
 })
 
