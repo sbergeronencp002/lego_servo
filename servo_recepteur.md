@@ -8,7 +8,7 @@
 
 Transformer le micro:bit en récepteur radio qui :
 
-➡️ creçoit "Ouvrir" ou "Fermer"
+➡️ reçoit "Ouvrir" ou "Fermer"
 
 ➡️ contrôle un servomoteur sur la broche P16
 
