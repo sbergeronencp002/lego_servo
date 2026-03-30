@@ -11,7 +11,8 @@
         "README.md",
         "main.blocks",
         "main.ts",
-        "servo_emetteur.md"
+        "servo_emetteur.md",
+        "servo_recepteur.md"
     ],
     "testFiles": [
         "test.ts"
